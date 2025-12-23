@@ -82,7 +82,7 @@ export interface SinoForeignProgram {
     foreignUni: string; // 国外对接院校
     foreignUniLogo: string;
     major: string;
-    mode: '1+3' | '2+2' | '3+1' | '4+0' | '硕士'; // 办学模式 updated
+    mode: '1+3' | '2+2' | '3+1' | '4+0' | '4+1' | '硕士'; // 办学模式 updated
     targetRegion: '英澳' | '港新' | '北美' | '欧洲'; // 目标方向
     tuition: string;
     tags: string[];

@@ -954,7 +954,7 @@ const SinoForeignProgramListView: React.FC = () => {
     // If Bachelor: Standard modes (1+3, 2+2 etc.), hide '硕士'.
     const currentModes = isMaster
         ? ['硕士']
-        : ['全部', '1+3', '2+2', '3+1', '4+0'];
+        : ['全部', '1+3', '2+2', '3+1', '4+0', '4+1'];
 
     const handleDegreeChange = (degree: '本科' | '硕士') => {
         setDegreeFilter(degree);
