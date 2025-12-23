@@ -113,11 +113,12 @@ const AdminDataAssistant: React.FC<AdminDataAssistantProps> = ({ onSaveData }) =
                 setProgress({ current: i + 1, total: chunks.length });
                 
                 // 每次新建实例确保 Key 最新且会话隔离
-                const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+                // FIX: 增加 || '' 以解决 TypeScript 报错 Type 'undefined' is not assignable to type 'string'
+                const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
                 
                 try {
                     const response = await ai.models.generateContent({
-                        model: "gemini-3-pro-preview", // 升级为 Pro 以处理复杂嵌套
+                        model: "gemini-3-flash-preview", 
                         contents: `你是一名资深的全球留学数据转换专家。
                         请将以下抓取内容转化为精准的院校专业 JSON 数组。
                         
@@ -131,7 +132,8 @@ const AdminDataAssistant: React.FC<AdminDataAssistantProps> = ({ onSaveData }) =
                         config: { responseMimeType: "application/json" }
                     });
 
-                    const chunkData = JSON.parse(response.text);
+                    // FIX: 增加 response.text 的非空检查
+                    const chunkData = JSON.parse(response.text || '[]');
                     const list = Array.isArray(chunkData) ? chunkData : [chunkData];
                     
                     addLog(`✨ AI 成功解析本包中的 ${list.length} 个院校实体`);
