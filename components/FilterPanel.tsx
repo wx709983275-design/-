@@ -1,12 +1,16 @@
+
 import React from 'react';
 import { Search } from 'lucide-react';
 
 interface FilterPanelProps {
     className?: string;
+    activeRegion?: string;
+    onRegionChange?: (region: string) => void;
 }
 
-const MobileFilterBar: React.FC<FilterPanelProps> = ({ className }) => {
-    const regions = ["不限", "英国", "新加坡", "中国香港", "美国", "澳洲", "加拿大"];
+const MobileFilterBar: React.FC<FilterPanelProps> = ({ className, activeRegion = "不限", onRegionChange }) => {
+    // 筛选选项，与 mockData.ts 中的 location 字段对应
+    const regions = ["不限", "英国", "美国", "澳大利亚", "新加坡", "中国香港", "加拿大", "欧洲", "亚洲"];
     
     return (
         <div className={`bg-white sticky top-12 z-40 pb-2 ${className}`}>
@@ -24,11 +28,16 @@ const MobileFilterBar: React.FC<FilterPanelProps> = ({ className }) => {
 
             {/* Tags */}
             <div className="flex overflow-x-auto px-4 gap-2 no-scrollbar pb-2">
-                <button className="whitespace-nowrap bg-purple-600 text-white text-xs px-4 py-1.5 rounded-full shadow-sm">
-                    全部地区
-                </button>
-                {regions.slice(1).map((r, i) => (
-                    <button key={i} className="whitespace-nowrap bg-gray-50 text-gray-600 text-xs px-4 py-1.5 rounded-full border border-gray-100">
+                {regions.map((r) => (
+                    <button 
+                        key={r} 
+                        onClick={() => onRegionChange?.(r)}
+                        className={`whitespace-nowrap text-xs px-4 py-1.5 rounded-full shadow-sm transition-colors ${
+                            activeRegion === r 
+                            ? 'bg-purple-600 text-white font-bold' 
+                            : 'bg-gray-50 text-gray-600 border border-gray-100'
+                        }`}
+                    >
                         {r}
                     </button>
                 ))}
